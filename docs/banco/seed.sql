@@ -6,3 +6,7 @@ INSERT INTO itens (nome, tipo, preco, estoque, descricao) VALUES
     ('Baldes',           'Ferramentas', 45.00, 10, 'Para armazenamento de água e recolhimento de resíduos.'),
     ('Sabonete Líquido', 'EPIs',        12.00, 25, 'Necessário para poções de velocidade'),
     ('Papéis',           'EPIs',        35.00,  8, 'Papel toalha, papel higiênico');
+
+SELECT * FROM itens;
+SELECT * FROM itens ORDER BY tipo, nome
+SELECT id, nome, tipo FROM itens ORDER BY nome

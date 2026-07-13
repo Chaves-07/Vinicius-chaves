@@ -17,7 +17,6 @@ function criarCliente() {
     });
 }
 
-
 // ─────────────────────────────────────────
 // LISTAR ITENS
 // ─────────────────────────────────────────
@@ -30,7 +29,7 @@ async function listarItens() {
         );
 
         console.log('\n╔════════════════════════════════════════════════════╗');
-        console.log('║                 ALMOXARIFADO                       ║');
+        console.log('║                 ALMOXARIFADO                      ║');
         console.log('╚════════════════════════════════════════════════════╝\n');
 
         if (resultado.rows.length === 0) {
@@ -190,7 +189,7 @@ async function menu() {
 
     while (rodando) {
         console.log('\n╔════════════════════════════════════════╗');
-        console.log('║              ALMOXARIFADO               ║');
+        console.log('║              ALMOXARIFADO              ║');
         console.log('╠════════════════════════════════════════╣');
         console.log('║  1 - Ver itens da loja                 ║');
         console.log('║  2 - Cadastrar novo item               ║');
