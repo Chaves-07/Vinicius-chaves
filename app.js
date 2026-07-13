@@ -1,5 +1,8 @@
-const { Client } = require('pg');
-const prompt = require('prompt-sync')();
+import promptSync from 'prompt-sync';
+const prompt = promptSync();
+
+import pg from 'pg';
+const { Client } = pg;
 
 // ─────────────────────────────────────────
 // CONFIGURAÇÃO DA CONEXÃO
@@ -9,10 +12,11 @@ function criarCliente() {
         host:     'localhost',
         port:     5432,
         user:     'postgres',
-        password: 'sua_senha',
-        database: 'almoxarifado_db'
+        password: 'root',
+        database: 'almoxarifado'
     });
 }
+
 
 // ─────────────────────────────────────────
 // LISTAR ITENS
@@ -26,11 +30,11 @@ async function listarItens() {
         );
 
         console.log('\n╔════════════════════════════════════════════════════╗');
-        console.log('║         ⚗️  LOJA DO ALQUIMISTA VALDRIS              ║');
+        console.log('║                 ALMOXARIFADO                       ║');
         console.log('╚════════════════════════════════════════════════════╝\n');
 
         if (resultado.rows.length === 0) {
-            console.log('A loja está vazia no momento.');
+            console.log('O Almoxarifado está vazia no momento.');
         } else {
             resultado.rows.forEach(item => {
                 console.log(`[${item.id}] ${item.nome}`);
@@ -56,10 +60,10 @@ async function cadastrarItem() {
         await client.connect();
 
         console.log('\n⚗️  CADASTRAR NOVO ITEM\n');
-        const nome      = prompt('Nome do item: ');
-        const tipo      = prompt('Tipo (Poção/Ingrediente/Elixir): ');
+        const nome      = prompt('Nome: ');
+        const tipo      = prompt('Tipo: ');
         const preco     = prompt('Preço: ');
-        const estoque   = prompt('Estoque inicial: ');
+        const estoque   = prompt('Estoque: ');
         const descricao = prompt('Descrição: ');
 
         if (!nome || !tipo || !preco) {
@@ -171,6 +175,13 @@ async function removerItem() {
     }
 }
 
+const perfil = prompt('Perfil (operador ou administrador): ').toLowerCase();
+
+if (perfil !== 'operador' && perfil !== 'administrador') {
+    console.log('❌ Perfil inválido.');
+    process.exit();
+}
+
 // ─────────────────────────────────────────
 // MENU PRINCIPAL
 // ─────────────────────────────────────────
@@ -179,12 +190,15 @@ async function menu() {
 
     while (rodando) {
         console.log('\n╔════════════════════════════════════════╗');
-        console.log('║     ⚗️  LOJA DO ALQUIMISTA VALDRIS     ║');
+        console.log('║              ALMOXARIFADO               ║');
         console.log('╠════════════════════════════════════════╣');
         console.log('║  1 - Ver itens da loja                 ║');
         console.log('║  2 - Cadastrar novo item               ║');
         console.log('║  3 - Atualizar estoque                 ║');
-        console.log('║  4 - Remover item                      ║');
+
+        if (perfil === 'administrador') {
+            console.log('║  4 - Remover item                      ║');
+        }
         console.log('║  0 - Fechar a loja                     ║');
         console.log('╚════════════════════════════════════════╝');
 
@@ -194,10 +208,16 @@ async function menu() {
             case '1': await listarItens();      break;
             case '2': await cadastrarItem();    break;
             case '3': await atualizarEstoque(); break;
-            case '4': await removerItem();      break;
+            case '4':
+                    if (perfil === 'administrador') {
+                        await removerItem();
+                    } else {
+                        console.log('❌ Apenas administradores podem remover itens do Almoxarifado.');
+                    }
+                    break;
             case '0':
                 rodando = false;
-                console.log('\n🧙 Até a próxima, aventureiro!\n');
+                console.log('\n🧙 Até a próxima, CLT!\n');
                 break;
             default:
                 console.log('❌ Opção inválida. Tente novamente.');
@@ -205,4 +225,4 @@ async function menu() {
     }
 }
 
-menu();
+menu();0
