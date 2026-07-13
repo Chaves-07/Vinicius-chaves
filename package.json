@@ -1,0 +1,28 @@
+{
+  "name": "vinicius-chaves",
+  "version": "1.0.0",
+  "description": "",
+  "main": "arquivo.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git", 
+    "url": "git+https://github.com/Chaves-07/Vinicius-chaves.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Chaves-07/Vinicius-chaves/issues"
+  },
+  "homepage": "https://github.com/Chaves-07/Vinicius-chaves#readme",
+  "dependencies": {
+    "pg": "^8.22.0",
+    "prompt-sync": "^4.2.0"
+  }
+}
